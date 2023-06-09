@@ -154,7 +154,7 @@ class Device {
     }
 
     // If package type is binding confirmation
-    if (pack.t === 'bindok' && this.device.id) {
+    if (pack.t === 'bindok' && this.device.id !== undefined) {
       this._confirmBinding(message.cid, pack.key)
 
       // Start requesting device status on set interval
@@ -175,7 +175,7 @@ class Device {
     // If package type is response, update device properties
     if (pack.t === 'res' && this.device.bound) {
       pack.opt.forEach((opt, i) => {
-        this.device.props[opt] = pack.val[i]
+        this.device.props[opt] = pack.p[i]
       })
       this.options.onUpdate(this.device)
       return
